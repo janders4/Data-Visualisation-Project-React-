@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Header from "./components/Header";
+import PropTypes from "prop-types";
+import axios from "axios";
+import Chart from "./components/Chart";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    asteroids: []
+  };
+  render() {
+    console.log(this.state.asteroids);
+    return (
+      <div className="App">
+        <Header />
+        <Chart />
+      </div>
+    );
+  }
+
+  componentDidMount = () => {
+    this.fetchAsteroids().then(asteroids => {
+      this.setState({ asteroids });
+    });
+  };
+
+  fetchAsteroids = async () => {
+    const { asteroids } = await axios.get(
+      // "https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DSsW4f2Eg7GNAQzeDhthoylJpLfLnV8ux7qwrf42"
+      "https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-01-01&end_date=2015-01-08&api_key=DEMO_KEY"
+    );
+    return asteroids;
+  };
 }
+
+App.propTypes = {};
 
 export default App;
