@@ -9,6 +9,7 @@ class App extends Component {
     breweries: []
   };
   render() {
+    console.log(this.state.breweries);
     return (
       <div className="App">
         <Header />
@@ -24,9 +25,7 @@ class App extends Component {
   };
 
   fetchBreweries = async () => {
-    const breweries = await axios.get(
-      "https://sandbox-api.brewerydb.com/v2/location/aqLvLE/?key=9bd58cfb195eb16aacb3aa71c6d287ba"
-    );
+    const breweries = await axios.get("localhost:9090/locations");
     return breweries.data;
   };
 }
