@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Chart />
+        <Chart breweries={this.state.breweries} />
       </div>
     );
   }
