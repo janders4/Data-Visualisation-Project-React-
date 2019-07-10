@@ -3,13 +3,13 @@ import Header from "./components/Header";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Chart from "./components/Chart";
+import { dataCleanse } from "./utils";
 
 class App extends Component {
   state = {
     breweries: []
   };
   render() {
-    console.log(this.state.breweries);
     return (
       <div className="App">
         <Header />
@@ -20,13 +20,16 @@ class App extends Component {
 
   componentDidMount = () => {
     this.fetchBreweries().then(breweries => {
-      this.setState(breweries);
+      const cleansedData = dataCleanse(breweries);
+      this.setState({ breweries: cleansedData });
     });
   };
 
   fetchBreweries = async () => {
-    const breweries = await axios.get("localhost:9090/locations");
-    return breweries.data;
+    const { data } = await axios.get(
+      "https://brewery-data-visualisation.herokuapp.com/locations"
+    );
+    return data.data;
   };
 }
 
